@@ -45,15 +45,11 @@ def fraction(string):
         return(int(nom)/int(denom))
     else:
         return(int(string))
-    
-    
-
 def dmSolve(string):
     if "--" in string:
         index = string.find("--")
         string = string[:index] + "+" + string[index+1:]
     return(string)
-
 def minusconvert(string):
     result = ""
     for i in string:
@@ -62,14 +58,18 @@ def minusconvert(string):
         else:
             result += i
     return result
-
 def splitter(string):
-    string = minusconvert(string)
-    s_list = string.split("+")
-    for i in range(len(s_list)):
-        s_list[i] = s_list[i].strip()
-    return(s_list)
-
+    print(string)
+    while True:
+        print(string)
+    if "+" in string or "-" in string:
+        string = minusconvert(string)
+        s_list = string.split("+")
+        for i in range(len(s_list)):
+            s_list[i] = s_list[i].strip()
+        return(s_list)
+    else:
+        return(string)
 def minusHandle(s_list):
     temp = ""
     remove = []
@@ -86,7 +86,6 @@ def minusHandle(s_list):
     for i in remove:
         s_list.remove(i)
     return s_list
-    
 def converter(v_list):
     functionl = []
     for i in v_list:
@@ -147,7 +146,6 @@ def converter(v_list):
         
         functionl.append(term)
     return(functionl)
-
 def calculator(numInput ,c_list):
     x = numInput
     result = 0
@@ -159,7 +157,6 @@ def calculator(numInput ,c_list):
         else:
             return(None),
     return(result)
-
 def derivebase(c_list):
 
     derivative = []
@@ -176,7 +173,6 @@ def derivebase(c_list):
             term = 0
         derivative.append(term)
     return(derivative)
-
 def integratebase(c_list):
     integral = []
     for i in c_list:
@@ -195,41 +191,31 @@ def integratebase(c_list):
             
         integral.append(term)
     return(integral)
-
 def integrate(c_list,degree):
     for i in range(degree):
         c_list = integratebase(c_list)
     return(c_list)
-
 def integrateWithC(c_list,degree):
     for i in range(degree):
         c_list = integratebase(c_list)  
         c_list.append(["c",0])
     return(c_list)
-
 def derive(c_list,degree):
     for i in range(degree):
         c_list = derivebase(c_list)
     return(c_list)
-                
 def interpretFunction(integer,string):
     return (calculator(integer , converter(minusHandle(splitter(string)))))
-
 def interpretDerivative(integer,string,degree):
     return (calculator(integer , derive(converter(minusHandle(splitter(string))),degree)))
-
 def interpretIntegral(integer,string,degree):
     return (calculator(integer , integrate(converter(minusHandle(splitter(string))),degree)))
-
 def f(x):
     return(interpretFunction(x,function))
-
 def df(x,n):
     return(interpretDerivative(x, function, n))
-
 def F(x,n):
     return (interpretIntegral(x, function, n))
-
 def degree_f():
     temp = 0
     c_list = converter(splitter(function))
@@ -238,18 +224,12 @@ def degree_f():
             if temp < i[1]:
                 temp = i[1]
     return(temp)
-
 def SumCoefficients():
     return(f(1))
-
 def constantOfF():
     return(f(0))
-
-
 def solve4x(n,starter):
-#solves for the root that is in the same interval as temp 
-#intervals seperated by critical points
-    
+
     temp = starter
     temp2 = None
     modifier = 0.1
@@ -271,7 +251,6 @@ def solve4x(n,starter):
         else:
             return(temp)      
     return(temp)
-
 def solve1x(x,temp):
     temp2 = temp + 1
     while temp != temp2:
@@ -280,7 +259,6 @@ def solve1x(x,temp):
             temp += 1e-3
         temp -= (f(temp)-x)/df(temp,1)
     return(temp)
-
 def solve1s(x,starter):
     debugList = []
     roots = []
@@ -293,7 +271,6 @@ def solve1s(x,starter):
         else:
             starter += 0.11
     return(roots)
-
 def solve4s(x,starter):
     debugList = []
     roots = []
@@ -306,19 +283,14 @@ def solve4s(x,starter):
         else:
             starter += 0.1
     return(roots)  
-
 def inverse(x,starter):
     return(solve1s(x,starter))      
-
-
 def degree(dict_b1):
     temp = 0
     for i in dict_b1:
         if i > temp:
             temp = i
     return(temp)
-
-
 def polynomialDivision(l1,l2):
     b1,dict_b1,dict_b2,b3 = [],{},{},[]
     l1 = converter(minusHandle(splitter(l1)))
@@ -370,7 +342,6 @@ def polynomialDivision(l1,l2):
         b1.append([dict_b1[i6],i6])
 
     return((b1,b3))    
-    
 def list2str(list_b):
     c_counter = 0
     if len(list_b) == 0:
@@ -417,7 +388,6 @@ def list2str(list_b):
         if result[0:2] == "+ ":
             result = result[2:]
         return(result)
-
 def factor(starter):
     result = ""
     tempF = list2str(converter(minusHandle(splitter(function))))
@@ -448,7 +418,6 @@ def factor(starter):
     if result[-3:] == " . ":
         result = result[0:-3]
     return(result)
-
 def degreeAlt(string):
     l1 = (converter(minusHandle(splitter(string))))
     temp = 0
@@ -456,7 +425,6 @@ def degreeAlt(string):
         if temp < i[1]:
             temp = i[1]
     return(temp)
-
 def strs2dictlist(l1):
     l2 =  []
     for i in l1:
@@ -469,7 +437,6 @@ def strs2dictlist(l1):
             tempDict[i4[1]] = i4[0]
         dictList.append(tempDict)
     return(dictList)
-    
 def polynomialAddition(strlist):
     
     dictList = strs2dictlist(strlist)
@@ -491,8 +458,6 @@ def polynomialAddition(strlist):
         
     stringr = list2str(listr)
     return(stringr)
-        
-
 def solve1xd(x,temp):
     temp2 = temp + 1
     while temp != temp2:
@@ -501,7 +466,6 @@ def solve1xd(x,temp):
             temp += 1e-3
         temp -= (df(temp,1)-x)/df(temp , 2)
     return(temp)
-
 def solve1sd(x,starter):
     debugList = []
     roots = []
@@ -514,7 +478,6 @@ def solve1sd(x,starter):
         else:
             starter += 0.11
     return(roots)
-
 def criticalPoints(starter):
     xs = solve1sd(0,starter)
     result = {0:[],1:[],2:[]}
@@ -539,13 +502,11 @@ def criticalPoints(starter):
         if result[i] == []:
             resultS.pop(i)        
     return(resultS)
-
 def list2dict(l1):
     resultingDict = {}
     for i in l1:
         resultingDict[i[1]] = i[0]
     return(resultingDict)
-
 def multiply2(d1,d2):
     resultingDict = {}
     for i in d1:
@@ -555,24 +516,20 @@ def multiply2(d1,d2):
             else:    
                 resultingDict[i + i2] = d1[i] * d2[i2]
     return(resultingDict)
-
 preparer = lambda string: list2dict(converter(minusHandle(splitter(string))))
 preparer2 = lambda string: converter(minusHandle(splitter(string)))
-
 def polynomialMultiplication(functions):
     result =  preparer(functions[0])
     functions = functions[1:]
     for i in functions:
         result = multiply2(result,preparer(i))
     return(list2str(dict2list(result)))
-
 def dict2list(d1):
     result = []
     for i in d1:
         temp = [d1[i],i]
         result.append(temp)
     return(result)
-
 
 
 
