@@ -4,7 +4,6 @@ from polynomial_class import polynomial
 def get_comb(values,c):
     if c == 1:
         return [[i,] for i in values]
-        
     else:
         l = []
         for i in values:
@@ -12,7 +11,15 @@ def get_comb(values,c):
             values2.remove(i)
             for j in get_comb(values2,c-1):
                 l.append([i,] + list(j))
-        return(l)
+                
+        l2 = []
+        for i in l:
+            i.sort()
+            if i not in l2:
+                l2.append(i)
+        print(len(l2))
+        return(l2)
+
 def lagrange_interpolation(arr):
     g = polynomial("0")
     for i in arr:
